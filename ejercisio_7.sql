@@ -18,7 +18,7 @@ IS
     v_apellido estudiantes.apellido%TYPE;
     v_correo VARCHAR2(100);
 BEGIN
-    SELECT nombre, apellido INTO v_nombre, v_apellido
+    SELECT LOWER(nombre), LOWER(apellido) INTO v_nombre, v_apellido
     FROM estudiantes
     WHERE id = student_id;
     
@@ -31,4 +31,4 @@ BEGIN
         RETURN 'no existe el estudiante';
 END generar_correo_estudiante;
 
-select  generar_correo_estudiante(id) from estudiantes ;
+select  generar_correo_estudiante(1) from DUAL;
