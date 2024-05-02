@@ -6,15 +6,13 @@
 -- un procedimiento que actualice los valores de dicha tabla.
 CREATE OR REPLACE PROCEDURE update_especialidades AS
 BEGIN
-FOR rec IN (SELECT especialidad, SUM(creditos) AS total_creditos, COUNT(*) AS total_estudiantes
-              FROM estudiantes
-              GROUP BY especialidad)
-  LOOP
-    UPDATE especialidades
-    SET totalcreditos = rec.total_creditos,
-        totalestudiantes = rec.total_estudiantes
-    WHERE especialidad = rec.especialidad;
-  END LOOP;
-END update_especialidades;
+DELETE FROM especialidades;
+FOR i in (SELECT especialidad as especialidad, SUM(creditos) as creditos, COUNT(*) as student FROM estudiantes GROUP BY especialidad)LOOP
+    Insert into especialidades values(i.especialidad, i.creditos, i.student);
+    END LOOP;
+    commit;
+END;
 
 execute update_especialidades;
+
+select * from especialidades;
